@@ -1,0 +1,182 @@
+# .htaccess para Servicios Espirituales Profesionales
+# Optimización de rendimiento, SEO y seguridad
+
+# ======================================================================
+# COMPRESIÓN GZIP
+# ======================================================================
+<IfModule mod_deflate.c>
+    # Comprimir HTML, CSS, JavaScript, Text, XML y fuentes
+    AddOutputFilterByType DEFLATE application/javascript
+    AddOutputFilterByType DEFLATE application/rss+xml
+    AddOutputFilterByType DEFLATE application/vnd.ms-fontobject
+    AddOutputFilterByType DEFLATE application/x-font
+    AddOutputFilterByType DEFLATE application/x-font-opentype
+    AddOutputFilterByType DEFLATE application/x-font-otf
+    AddOutputFilterByType DEFLATE application/x-font-truetype
+    AddOutputFilterByType DEFLATE application/x-font-ttf
+    AddOutputFilterByType DEFLATE application/x-javascript
+    AddOutputFilterByType DEFLATE application/xhtml+xml
+    AddOutputFilterByType DEFLATE application/xml
+    AddOutputFilterByType DEFLATE font/opentype
+    AddOutputFilterByType DEFLATE font/otf
+    AddOutputFilterByType DEFLATE font/ttf
+    AddOutputFilterByType DEFLATE image/svg+xml
+    AddOutputFilterByType DEFLATE image/x-icon
+    AddOutputFilterByType DEFLATE text/css
+    AddOutputFilterByType DEFLATE text/html
+    AddOutputFilterByType DEFLATE text/javascript
+    AddOutputFilterByType DEFLATE text/plain
+    AddOutputFilterByType DEFLATE text/xml
+</IfModule>
+
+# ======================================================================
+# CACHE DEL NAVEGADOR
+# ======================================================================
+<IfModule mod_expires.c>
+    ExpiresActive on
+    
+    # Imágenes
+    ExpiresByType image/jpg "access plus 1 month"
+    ExpiresByType image/jpeg "access plus 1 month"
+    ExpiresByType image/gif "access plus 1 month"
+    ExpiresByType image/png "access plus 1 month"
+    ExpiresByType image/svg+xml "access plus 1 month"
+    ExpiresByType image/webp "access plus 1 month"
+    ExpiresByType image/x-icon "access plus 1 year"
+    
+    # CSS y JavaScript
+    ExpiresByType text/css "access plus 1 month"
+    ExpiresByType application/javascript "access plus 1 month"
+    ExpiresByType text/javascript "access plus 1 month"
+    
+    # Fuentes
+    ExpiresByType font/ttf "access plus 1 year"
+    ExpiresByType font/otf "access plus 1 year"
+    ExpiresByType font/woff "access plus 1 year"
+    ExpiresByType font/woff2 "access plus 1 year"
+    ExpiresByType application/font-woff "access plus 1 year"
+    
+    # HTML
+    ExpiresByType text/html "access plus 1 day"
+    
+    # Otros archivos
+    ExpiresByType application/pdf "access plus 1 month"
+    ExpiresByType text/xml "access plus 1 day"
+    ExpiresByType application/xml "access plus 1 day"
+</IfModule>
+
+# ======================================================================
+# HEADERS DE CACHE
+# ======================================================================
+<IfModule mod_headers.c>
+    # Cache para imágenes
+    <FilesMatch "\.(jpg|jpeg|png|gif|webp|svg|ico)$">
+        Header set Cache-Control "max-age=2592000, public"
+    </FilesMatch>
+    
+    # Cache para CSS y JS
+    <FilesMatch "\.(css|js)$">
+        Header set Cache-Control "max-age=2592000, public"
+    </FilesMatch>
+    
+    # Cache para fuentes
+    <FilesMatch "\.(ttf|otf|woff|woff2)$">
+        Header set Cache-Control "max-age=31536000, public"
+    </FilesMatch>
+    
+    # Headers de seguridad
+    Header always set X-Content-Type-Options nosniff
+    Header always set X-Frame-Options DENY
+    Header always set X-XSS-Protection "1; mode=block"
+    Header always set Referrer-Policy "strict-origin-when-cross-origin"
+    
+    # Content Security Policy
+    Header always set Content-Security-Policy "default-src 'self'; script-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://trae-api-us.mchost.guru; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https: http:; connect-src 'self' https:;"
+</IfModule>
+
+# ======================================================================
+# REESCRITURA DE URLs
+# ======================================================================
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    
+    # Forzar HTTPS
+    RewriteCond %{HTTPS} off
+    RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+    
+    # Remover www
+    RewriteCond %{HTTP_HOST} ^www\.(.*) [NC]
+    RewriteRule ^(.*)$ https://%1/$1 [R=301,L]
+    
+    # Página de inicio
+    RewriteCond %{THE_REQUEST} /index\.html [NC]
+    RewriteRule ^index\.html$ / [NC,R=301,L]
+    
+    # Remover extensión .html
+    RewriteCond %{THE_REQUEST} /([^.]+)\.html [NC]
+    RewriteRule ^ /%1 [NC,R=301,L]
+    
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteRule ^([^.]+)$ $1.html [NC,L]
+</IfModule>
+
+# ======================================================================
+# TIPOS MIME
+# ======================================================================
+<IfModule mod_mime.c>
+    # Fuentes web
+    AddType application/font-woff woff
+    AddType application/font-woff2 woff2
+    AddType application/vnd.ms-fontobject eot
+    AddType font/ttf ttf
+    AddType font/otf otf
+    
+    # Otros tipos
+    AddType image/webp webp
+    AddType text/cache-manifest appcache
+</IfModule>
+
+# ======================================================================
+# SEGURIDAD
+# ======================================================================
+# Ocultar información del servidor
+ServerTokens Prod
+
+# Prevenir acceso a archivos sensibles
+<FilesMatch "\.(htaccess|htpasswd|ini|log|sh|inc|bak)$">
+    Order Allow,Deny
+    Deny from all
+</FilesMatch>
+
+# Prevenir acceso a directorios de desarrollo
+RedirectMatch 404 /\.git
+RedirectMatch 404 /\.trae
+RedirectMatch 404 /node_modules
+
+# ======================================================================
+# OPTIMIZACIÓN
+# ======================================================================
+# Desactivar ETags
+FileETag None
+
+# Configuración de charset
+AddDefaultCharset UTF-8
+
+# ======================================================================
+# PÁGINAS DE ERROR PERSONALIZADAS
+# ======================================================================
+ErrorDocument 404 /404.html
+ErrorDocument 500 /500.html
+
+# ======================================================================
+# CONFIGURACIÓN ESPECÍFICA PARA SERVICIOS ESPIRITUALES
+# ======================================================================
+# Redirecciones para URLs antiguas de WordPress (si las hubiera)
+Redirect 301 /wp-admin /contacto
+Redirect 301 /wp-content /
+Redirect 301 /wp-includes /
+
+# Configuración para sitemap
+RewriteRule ^sitemap\.xml$ /sitemap.xml [L]
+RewriteRule ^robots\.txt$ /robots.txt [L]

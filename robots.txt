@@ -1,0 +1,53 @@
+# Robots.txt para Servicios Espirituales Profesionales
+# Optimizado para SEO y indexación de motores de búsqueda
+
+User-agent: *
+Allow: /
+
+# Permitir acceso a todas las páginas principales
+Allow: /index.html
+Allow: /servicios.html
+Allow: /sobre-nosotros.html
+Allow: /testimonios.html
+Allow: /blog.html
+Allow: /contacto.html
+
+# Permitir acceso a recursos estáticos
+Allow: /css/
+Allow: /js/
+Allow: /assets/
+
+# Bloquear archivos de configuración y desarrollo
+Disallow: /.trae/
+Disallow: /node_modules/
+Disallow: /.git/
+Disallow: /.env
+Disallow: /package.json
+Disallow: /package-lock.json
+Disallow: /README.md
+
+# Bloquear archivos temporales
+Disallow: /*.tmp
+Disallow: /*.log
+Disallow: /*.bak
+
+# Configuración específica para diferentes bots
+User-agent: Googlebot
+Allow: /
+Crawl-delay: 1
+
+User-agent: Bingbot
+Allow: /
+Crawl-delay: 1
+
+User-agent: Slurp
+Allow: /
+Crawl-delay: 2
+
+# Sitemap location
+Sitemap: https://tudominio.com/sitemap.xml
+
+# Información adicional
+# Sitio web: Servicios Espirituales Profesionales
+# Contacto: info@serviciosespirituales.com
+# Última actualización: 2024-12-20

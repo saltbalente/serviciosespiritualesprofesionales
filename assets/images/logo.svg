@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="120" height="60" viewBox="0 0 120 60" fill="none">
+  <!-- Background circle -->
+  <circle cx="30" cy="30" r="25" fill="#2C1810" stroke="#D4AF37" stroke-width="2"/>
+  
+  <!-- Mystical symbol in center -->
+  <g transform="translate(30, 30)">
+    <!-- Star/pentagram -->
+    <path d="M0,-15 L4.5,-4.5 L15,-4.5 L7.5,2.25 L12,12 L0,6 L-12,12 L-7.5,2.25 L-15,-4.5 L-4.5,-4.5 Z" fill="#D4AF37"/>
+    <!-- Inner circle -->
+    <circle cx="0" cy="0" r="8" fill="none" stroke="#D4AF37" stroke-width="1.5"/>
+    <!-- Center dot -->
+    <circle cx="0" cy="0" r="2" fill="#D4AF37"/>
+  </g>
+  
+  <!-- Text -->
+  <text x="65" y="20" font-family="serif" font-size="12" font-weight="bold" fill="#2C1810">SERVICIOS</text>
+  <text x="65" y="35" font-family="serif" font-size="12" font-weight="bold" fill="#D4AF37">ESPIRITUALES</text>
+  <text x="65" y="48" font-family="serif" font-size="8" fill="#2C1810">PROFESIONALES</text>
+  
+  <!-- Decorative elements -->
+  <circle cx="62" cy="25" r="1" fill="#D4AF37"/>
+  <circle cx="118" cy="25" r="1" fill="#D4AF37"/>
+  <path d="M62,30 Q65,27 68,30" stroke="#D4AF37" stroke-width="0.5" fill="none"/>
+  <path d="M112,30 Q115,27 118,30" stroke="#D4AF37" stroke-width="0.5" fill="none"/>
+</svg>
